@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Node from './Node';
+import Edges from './Edges';
+import BFSButton from './BFSButton';
 
 const Graph = () => {
   const [nodes, setNodes] = useState([]);
@@ -65,22 +67,12 @@ const Graph = () => {
 
   return (
     <div>
-      {/* draw edges */}
-      <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-        {edges.map((edge, index) => {
-          const fromNode = nodes.find(node => node.id === edge.from);
-          const toNode = nodes.find(node => node.id === edge.to);
-          return (
-            <line key={index} x1={fromNode.x} y1={fromNode.y} x2={toNode.x} y2={toNode.y} stroke="black" strokeWidth="2" />
-          );
-        })}
-      </svg>
-      {/* draw nodes */}
-      {nodes.map(node => (
-        <Node key={node.id} id={node.id} visited={visited.includes(node.id)} x={node.x} y={node.y} />
-      ))}
-      <button style={{ position: 'relative', zIndex: 1000 }} onClick={() => { console.log('started'); bfs(nodes[0].id) }}>Start BFS</button>
-    </div>
+    <Edges edges={edges} nodes={nodes} />
+    {nodes.map(node => (
+      <Node key={node.id} id={node.id} visited={visited.includes(node.id)} x={node.x} y={node.y} />
+    ))}
+    <BFSButton onStartBFS={() => bfs(nodes[0].id)} />
+  </div>
   );
 };
 
