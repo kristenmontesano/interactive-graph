@@ -7,7 +7,10 @@ const Graph = () => {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [visited, setVisited] = useState([]);
-  const [animationInProgress, setAnimationInProgress] = useState(false); 
+  const [animationInProgress, setAnimationInProgress] = useState(false);
+  const [startNode, setStartNode] = useState('');
+  const [endNode, setEndNode] = useState('');
+  const [nodesSearched, setNodesSearched] = useState(0);
 
   useEffect(() => {
     // init graph
@@ -42,22 +45,27 @@ const Graph = () => {
     setVisited([]);
   }, []);
 
-  const bfs = (startNode) => {
+  const bfs = (startNode, endNode) => {
     setAnimationInProgress(true);
     // init queue with startNode
     let queue = [startNode];
     let visitedOrder = [];
+    let count = 0;
 
     while (queue.length > 0) {
       let currentNode = queue.shift();
+      // if (currentNode === endNode) break;
       if (!visitedOrder.includes(currentNode)) {
+        count++;
         visitedOrder.push(currentNode);
+        if (currentNode === endNode) break;
         // add neighbors to the queue
         let fromNeighbors = edges.filter(edge => edge.from === currentNode).map(edge => edge.to);
         let toNeighbors = edges.filter(edge => edge.to === currentNode).map(edge => edge.from);
         queue = [...queue, ...fromNeighbors, ...toNeighbors];
       }
     }
+    setNodesSearched(count);
 
     // animate the traversal in order
     visitedOrder.forEach((node, index) => {
@@ -72,18 +80,13 @@ const Graph = () => {
 
   return (
     <div>
-    <Edges edges={edges} nodes={nodes} />
-    {nodes.map(node => (
-      <Node key={node.id} id={node.id} visited={visited.includes(node.id)} x={node.x} y={node.y} />
-    ))}
-    <BFSButton
-      onStartBFS={() => bfs(nodes[0].id)}
-      animationInProgress={animationInProgress}
-      onReset={() => {
-        setVisited([]);
-      }}
-    />
-  </div>
+      <Edges edges={edges} nodes={nodes} />
+      {nodes.map(node => (
+        <Node key={node.id} id={node.id} visited={visited.includes(node.id)} x={node.x} y={node.y} />
+      ))}
+      <BFSButton onStartBFS={(start, end) => bfs(start, end)} animationInProgress={animationInProgress} onReset={() => setVisited([])} />
+      {animationInProgress && <p>Nodes searched: {nodesSearched}</p>}
+    </div>
   );
 };
 
