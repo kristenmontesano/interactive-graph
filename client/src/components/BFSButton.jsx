@@ -27,18 +27,20 @@ const BFSButton = ({ onStartBFS, animationInProgress, onReset }) => {
   if (!isVisible) return null;
 
   return (
-    <div>
-        <select value={startNode} onChange={(e) => setStartNode(e.target.value)} style={{ position: 'relative', zIndex: 1000 }}>
+    <div style={{ margin: '20px' }}>
+      <label htmlFor="startNode" style={{ marginRight: '2px' }}>Start Node:</label>
+      <select id="startNode" value={startNode} onChange={(e) => setStartNode(e.target.value)} style={{ position: 'relative', zIndex: 1000, marginRight: '10px' }}>
         {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'].map(letter => (
           <option key={letter} value={letter}>{letter}</option>
         ))}
       </select>
-      <select value={endNode} onChange={(e) => setEndNode(e.target.value)} style={{ position: 'relative', zIndex: 1000 }}>
+      <label htmlFor="endNode" style={{ marginRight: '2px' }}>End Node:</label>
+      <select id="endNode" value={endNode} onChange={(e) => setEndNode(e.target.value)} style={{ position: 'relative', zIndex: 1000, marginRight: '10px' }}>
         {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'].map(letter => (
           <option key={letter} value={letter}>{letter}</option>
         ))}
       </select>
-      <button style={{ position: 'relative', zIndex: 1000 }} onClick={handleClick}>{buttonLabel}</button>
+      <button style={{ position: 'relative', zIndex: 1000, color: 'white', backgroundColor: 'green', border: 'none', padding: '5px 10px', borderRadius: '5px' }} onClick={handleClick}>{buttonLabel}</button>
     </div>
   );
 };

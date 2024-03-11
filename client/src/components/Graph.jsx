@@ -79,13 +79,13 @@ const Graph = () => {
   };
 
   return (
-    <div>
+    <div style={{ position: 'relative', height: '500px' }}>
       <Edges edges={edges} nodes={nodes} />
       {nodes.map(node => (
         <Node key={node.id} id={node.id} visited={visited.includes(node.id)} x={node.x} y={node.y} />
       ))}
       <BFSButton onStartBFS={(start, end) => bfs(start, end)} animationInProgress={animationInProgress} onReset={() => setVisited([])} />
-      {animationInProgress && <p>Nodes searched: {nodesSearched}</p>}
+      {animationInProgress && <p style={{ margin: '20px' }}>Nodes searched: {nodesSearched}</p>}
     </div>
   );
 };

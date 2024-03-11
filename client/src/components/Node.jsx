@@ -3,7 +3,7 @@ import React from 'react';
 const Node = ({ id, visited, x, y }) => {
   const size = 30;
   const style = {
-    backgroundColor: visited ? 'green' : 'red',
+    backgroundColor: visited ? 'blue' : 'red',
     borderRadius: '50%', // make it a circle
     width: `${size}px`,
     height: `${size}px`,
