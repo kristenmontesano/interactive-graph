@@ -7,6 +7,7 @@ const Graph = () => {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [visited, setVisited] = useState([]);
+  const [animationInProgress, setAnimationInProgress] = useState(false); 
 
   useEffect(() => {
     // init graph
@@ -42,6 +43,7 @@ const Graph = () => {
   }, []);
 
   const bfs = (startNode) => {
+    setAnimationInProgress(true);
     // init queue with startNode
     let queue = [startNode];
     let visitedOrder = [];
@@ -61,6 +63,9 @@ const Graph = () => {
     visitedOrder.forEach((node, index) => {
       setTimeout(() => {
         setVisited(visited => [...visited, node]);
+        if (index === visitedOrder.length - 1) {
+          setAnimationInProgress(false);
+        }
       }, index * 750);
     });
   };
@@ -71,7 +76,13 @@ const Graph = () => {
     {nodes.map(node => (
       <Node key={node.id} id={node.id} visited={visited.includes(node.id)} x={node.x} y={node.y} />
     ))}
-    <BFSButton onStartBFS={() => bfs(nodes[0].id)} />
+    <BFSButton
+      onStartBFS={() => bfs(nodes[0].id)}
+      animationInProgress={animationInProgress}
+      onReset={() => {
+        setVisited([]);
+      }}
+    />
   </div>
   );
 };
