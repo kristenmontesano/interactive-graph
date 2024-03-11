@@ -3,6 +3,7 @@ import * as path from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
+// @ts-ignore
 export default ({mode}) => {
   const vars = loadEnv(mode, path.join(process.cwd(), '..'), '');
   const env: Record<string, string> = {};
@@ -16,20 +17,11 @@ export default ({mode}) => {
     env.PORT = vars.PORT;
   }
 
-  const fullReloadAlways: Plugin = {
-    name: 'full-reload',
-    handleHotUpdate({server}) {
-      server.ws.send({type: "full-reload"});
-      return [];
-    },
-  };
-
   console.log(`\njoin link: http://localhost:${env['VITE_PORT']}/index.html\n`);
 
   return defineConfig({
     plugins: [
       tsconfigPaths(),
-      fullReloadAlways,
     ],
     define: {
       ['process.env']: env,

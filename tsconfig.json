@@ -14,19 +14,19 @@
     "checkJs": true,
     "paths": {
       "src/*": [
-        "./src/*"
+        "client/src/*"
       ]
     },
     "isolatedModules": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
   },
   "include": [
-    "src/**/*.d.ts",
-    "src/**/*.ts",
-    "src/**/*.js",
-    "vite.config.ts",
+    "client/src/**/*.d.ts",
+    "client/src/**/*.ts",
+    "client/src/**/*.js",
+    "client/vite.config.ts",
   ],
   "references": [
     {
